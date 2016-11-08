@@ -2,7 +2,7 @@ package com.stveo.stevebowling.budget;
 
 import android.app.Application;
 
-import com.stveo.stevebowling.budget.Stages.PeopleMonListStage;
+import com.stveo.stevebowling.budget.Stages.PeopleMonMapStage;
 
 import flow.Flow;
 import flow.History;
@@ -14,7 +14,7 @@ import flow.History;
 public class PeopleMonApplication extends Application {
     private static PeopleMonApplication application;
     public final Flow mainFlow=
-            new Flow(History.single(new PeopleMonListStage()));
+            new Flow(History.single(new PeopleMonMapStage()));
 
     public static final String API_BASE_URL = "https://efa-peoplemon-api.azurewebsites.net/";
 

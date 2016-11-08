@@ -14,7 +14,7 @@ import com.stveo.stevebowling.budget.Models.Account;
 import com.stveo.stevebowling.budget.Network.RestClient;
 import com.stveo.stevebowling.budget.PeopleMonApplication;
 import com.stveo.stevebowling.budget.R;
-import com.stveo.stevebowling.budget.Stages.PeopleMonListStage;
+import com.stveo.stevebowling.budget.Stages.PeopleMonMapStage;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -99,7 +99,7 @@ public class RegisterView extends LinearLayout {
                            // UserStore.getInstance().setTokenExpiration(regUser.getExpiration());
 
                             Flow flow = PeopleMonApplication.getMainFlow();
-                            History newHistory = History.single(new PeopleMonListStage());
+                            History newHistory = History.single(new PeopleMonMapStage());
                             flow.setHistory(newHistory, Flow.Direction.REPLACE);
 
 

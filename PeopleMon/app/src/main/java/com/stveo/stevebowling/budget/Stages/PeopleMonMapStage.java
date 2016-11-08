@@ -10,21 +10,21 @@ import com.stveo.stevebowling.budget.Riggers.SlideRigger;
  * Created by stevebowling on 10/31/16.
  */
 
-public class PeopleMonListStage extends IndexedStage {
+public class PeopleMonMapStage extends IndexedStage {
     private final SlideRigger rigger;
 
-    public PeopleMonListStage(Application context){
-        super(PeopleMonListStage.class.getName());
+    public PeopleMonMapStage(Application context){
+        super(PeopleMonMapStage.class.getName());
         this.rigger=new SlideRigger(context);
     }
 
-    public PeopleMonListStage(){
+    public PeopleMonMapStage(){
         this(PeopleMonApplication.getInstance());
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.peoplemon_list_view;
+        return R.layout.maps_view;
     }
 
     @Override

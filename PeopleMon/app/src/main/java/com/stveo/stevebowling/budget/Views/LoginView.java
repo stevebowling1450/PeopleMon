@@ -14,7 +14,7 @@ import com.stveo.stevebowling.budget.Network.RestClient;
 import com.stveo.stevebowling.budget.Network.UserStore;
 import com.stveo.stevebowling.budget.PeopleMonApplication;
 import com.stveo.stevebowling.budget.R;
-import com.stveo.stevebowling.budget.Stages.PeopleMonListStage;
+import com.stveo.stevebowling.budget.Stages.PeopleMonMapStage;
 import com.stveo.stevebowling.budget.Stages.RegisterStage;
 
 import butterknife.Bind;
@@ -102,9 +102,8 @@ public class LoginView extends LinearLayout {
                        // UserStore.getInstance().setTokenExpiration(authUser.getExpiration());
 
                         Flow flow= PeopleMonApplication.getMainFlow();
-                        History newHistory = History.single(new PeopleMonListStage());
+                        History newHistory = History.single(new PeopleMonMapStage());
                         flow.setHistory(newHistory, Flow.Direction.REPLACE);
-
 
                     }else {
                         resetView();
@@ -121,10 +120,12 @@ public class LoginView extends LinearLayout {
         }
     }
 
+
     private void resetView(){
         loginButton.setEnabled(true);
         registerButton.setEnabled(true);
         spinner.setVisibility(GONE);
 
     }
+
 }

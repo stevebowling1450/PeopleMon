@@ -1,16 +1,14 @@
 package com.stveo.stevebowling.budget;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.widget.RelativeLayout;
 
 import com.davidstemmer.flow.plugin.screenplay.ScreenplayDispatcher;
 import com.stveo.stevebowling.budget.Network.UserStore;
-import com.stveo.stevebowling.budget.PeopleMonApplication;
-import com.stveo.stevebowling.budget.R;
 import com.stveo.stevebowling.budget.Stages.LoginStage;
-import com.stveo.stevebowling.budget.Stages.PeopleMonListStage;
+import com.stveo.stevebowling.budget.Stages.PeopleMonMapStage;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,6 +24,7 @@ private String TAG = "MainActivity";
     RelativeLayout container;
 
     private Menu menu;
+    public Bundle savedInstanceState;
 
 
     @Override
@@ -53,7 +52,7 @@ private String TAG = "MainActivity";
     public void onBackPressed() {
         if (!flow.goBack()){
             flow.removeDispatcher(dispatcher);
-            flow.setHistory(History.single(new PeopleMonListStage()),
+            flow.setHistory(History.single(new PeopleMonMapStage()),
                     Flow.Direction.BACKWARD);
             super.onBackPressed();
         }
