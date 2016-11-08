@@ -90,7 +90,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
 
             }
         Home = new LatLng(lat, lng);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home,10));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home,16));
         mMap.setMyLocationEnabled(true);
 
             //LatLng paintsville = new LatLng(37.8145, -82.8071);
@@ -162,7 +162,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
             Home = new LatLng(lat, lng);
             String pos = Home +"";
             Log.d("****", pos );
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home,10));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home,16));
             LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
             mMap.addMarker(new MarkerOptions().position(loc));
         }
