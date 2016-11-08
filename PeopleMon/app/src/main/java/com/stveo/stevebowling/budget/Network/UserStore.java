@@ -48,7 +48,7 @@ public class UserStore {
 
     public void setTokenExpiration(Date expiration){
         SharedPreferences.Editor editor= sharedPreferences.edit();
-        //editor.putLong(Constants.tokenExpiration, expiration.getTime());
+        editor.putLong(Constants.tokenExpiration, expiration.getTime());
         editor.apply();
     }
 

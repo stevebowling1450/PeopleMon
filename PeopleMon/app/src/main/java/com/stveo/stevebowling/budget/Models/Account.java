@@ -55,10 +55,10 @@ public class Account {
     @SerializedName("apiKey")
     private String apiKey;
 
-    @SerializedName("token")
+    @SerializedName("access_token")
     private String token;
 
-    @SerializedName("expiration")
+    @SerializedName(".expires")
     private Date expiration;
 
     @SerializedName("grantType")
