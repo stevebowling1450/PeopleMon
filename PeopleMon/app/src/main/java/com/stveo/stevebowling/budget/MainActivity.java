@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import com.davidstemmer.flow.plugin.screenplay.ScreenplayDispatcher;
 import com.stveo.stevebowling.budget.Network.UserStore;
+import com.stveo.stevebowling.budget.Stages.EditProfileStage;
 import com.stveo.stevebowling.budget.Stages.LoginStage;
 import com.stveo.stevebowling.budget.Stages.PeopleMonMapStage;
 
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.editProfile:
                 History newHistory = flow.getHistory().buildUpon()
-                       // .push(new EditProfileStage())
+                       .push(new EditProfileStage())
                         .build();
                 flow.setHistory(newHistory, Flow.Direction.FORWARD);
                 return true;
@@ -105,4 +106,5 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }

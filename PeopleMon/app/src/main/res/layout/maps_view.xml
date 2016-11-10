@@ -2,10 +2,7 @@
 <com.stveo.stevebowling.budget.Views.MapsView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MAP VIEW"/>
+
     <com.google.android.gms.maps.MapView
         android:id="@+id/map"
         android:layout_width="match_parent"
@@ -13,5 +10,43 @@
         android:apiKey="@string/google_maps_key">
 
     </com.google.android.gms.maps.MapView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/radar_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="50dp"
+        android:src="@mipmap/radar"
+        android:clickable="true"
+
+
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/chat_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/radar_button"
+        android:src="@mipmap/chat"
+        android:clickable="true"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/caught_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:layout_toRightOf="@id/chat_button"
+        android:src="@mipmap/icon"
+        android:clickable="true"/>
+
 
 </com.stveo.stevebowling.budget.Views.MapsView>
