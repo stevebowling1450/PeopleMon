@@ -17,14 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.davidstemmer.flow.plugin.screenplay.ScreenplayDispatcher;
 import com.stveo.stevebowling.budget.Components.Utils;
 import com.stveo.stevebowling.budget.Network.UserStore;
 import com.stveo.stevebowling.budget.Stages.EditProfileStage;
 import com.stveo.stevebowling.budget.Stages.LoginStage;
 import com.stveo.stevebowling.budget.Stages.PeopleMonMapStage;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import flow.Flow;
@@ -39,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.container)
     RelativeLayout container;
-
-
-
 
     private Menu menu;
     public Bundle savedInstanceState;
@@ -88,9 +83,6 @@ public class MainActivity extends AppCompatActivity {
         flow = PeopleMonApplication.getMainFlow();
         dispatcher = new ScreenplayDispatcher(this, container);
         dispatcher.setUp(flow);
-
-        // UserStore.getInstance().setToken(null);
-
 
         if (UserStore.getInstance().getToken() == null ||
                 UserStore.getInstance().getTokenExpiration() == null) {
@@ -161,41 +153,10 @@ public class MainActivity extends AppCompatActivity {
             cursor.close();
 
             ImageView imageView = (ImageView) findViewById(R.id.imageView);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
             Bitmap image = BitmapFactory.decodeFile(picturePath);
             Utils.encodeTobase64(image);
-
-
-
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//            byte[] bytes = baos.toByteArray();
-//
-//
-//             apiImage = Base64.encodeToString(bytes, Base64.DEFAULT);
-//
-//
-//
-//            editProfileImage();
+            imageView.setImageBitmap(image);
 
         }
     }
-
-//    public void editProfileImage(){
-//        Account editUserImage = new Account(apiImage);
-//        RestClient restClient = new RestClient();
-//        restClient.getApiSevrice().editProfile(editUserImage).enqueue(new Callback<Account>() {
-//            @Override
-//            public void onResponse(Call<Account> call, Response<Account> response) {
-//                Toast.makeText(MainActivity.this, "UpdatedImage", Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Account> call, Throwable t) {
-//
-//            }
-//        });
-//    }
-
 }

@@ -73,7 +73,7 @@ public class Account {
         this.fullName = fullName;
         this.password = password;
         this.email = email;
-        this.avatarBase64 = Constants.avatar;
+        this.avatarBase64 = Constants.IMAGE;
         this.apiKey = Constants.apiKey;
 
     }
@@ -85,12 +85,12 @@ public class Account {
     }
 
     public Account( String avatarBase64) {
-            this.avatarBase64 = Constants.avatar;
+            this.avatarBase64 = Constants.IMAGE;
             //this.fullName = fullName;
     }
 
     public Account(String fullName, String avatarBase64) {
-        this.avatarBase64 = Constants.avatar;
+        this.avatarBase64 = Constants.IMAGE;
         this.fullName = fullName;
     }
 

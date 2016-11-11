@@ -43,7 +43,7 @@ public class EditProfileView extends LinearLayout {
 
 
     @SerializedName("avatar")
-    String avatar = Constants.avatar;
+    String avatar = Constants.IMAGE;
 
     @Bind(R.id.submit_button)
     Button submit;
