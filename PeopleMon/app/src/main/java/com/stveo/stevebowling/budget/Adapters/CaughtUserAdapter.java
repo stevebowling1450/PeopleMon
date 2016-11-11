@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.stveo.stevebowling.budget.Components.Utils;
 import com.stveo.stevebowling.budget.Models.User;
 import com.stveo.stevebowling.budget.R;
 
@@ -69,8 +70,7 @@ public class CaughtUserAdapter extends RecyclerView.Adapter<CaughtUserAdapter.Us
         public void bindUser(User user){
             caughtUserName.setText(user.getUserName());
 
-            //Need to add in imageview and decoding process
-//            caughtAvatar.setText
+            caughtAvatar.setImageBitmap(Utils.decodeImage(user.getAvatarBase()));
         }
     }
 }

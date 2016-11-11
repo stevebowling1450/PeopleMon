@@ -91,7 +91,6 @@ public class EditProfileView extends LinearLayout {
         });
     }
 
-
     public void myProfile() {
         RestClient restClient = new RestClient();
         restClient.getApiSevrice().myInfo().enqueue(new Callback<Account>() {
@@ -104,8 +103,7 @@ public class EditProfileView extends LinearLayout {
                     Constants.me = (Utils.decodeImage(profile.getAvatarBase64()));
                         myName = profile.getFullName();
                         myAvatar= profile.getAvatarBase64();
-                       // Log.d("%%%%%%", myName + myAvatar);
-                    //Toast.makeText(context, "Your Name "+ myName, Toast.LENGTH_SHORT).show();
+
                     }
                 }
 
@@ -119,4 +117,6 @@ public class EditProfileView extends LinearLayout {
 
 
     }
+
+
 }
