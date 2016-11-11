@@ -16,8 +16,8 @@ public class VerticalSlideRigger extends TweenRigger {
     static {
         params.forwardIn = R.anim.slide_in_up;
         params.backIn = R.anim.slide_in_down;
-        params.backOut = R.anim.slide_in_down;
-        params.forwardOut = R.anim.slide_in_up;
+        params.backOut = R.anim.slide_out_down;
+        params.forwardOut = R.anim.slide_out_up;
     }
 
     public  VerticalSlideRigger(Application context){

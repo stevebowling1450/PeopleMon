@@ -16,8 +16,8 @@ public class SlideRigger extends TweenRigger {
     static {
         params.forwardIn = R.anim.slide_in_right;
         params.backIn = R.anim.slide_in_left;
-        params.backOut = R.anim.slide_in_right;
-        params.forwardOut = R.anim.slide_in_left;
+        params.backOut = R.anim.slide_out_right;
+        params.forwardOut = R.anim.slide_out_left;
 
     }
 

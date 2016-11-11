@@ -32,4 +32,13 @@ public interface ApiSevrice {
     @GET("v1/User/Nearby")
     Call<User[]>findNearby(@Query("radiusInMeters") Integer radiusInMeters);
 
+   @POST("v1/User/Catch")
+    Call<User>catchUser(@Body User caughtUserId);
+
+    @POST("api/Account/UserInfo")
+    Call<Account>editProfile(@Body Account update);
+
+    @GET("v1/User/Caught")
+    Call<User[]>caughtList();
+
 }

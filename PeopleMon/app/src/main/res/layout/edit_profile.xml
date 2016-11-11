@@ -1,10 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.stveo.stevebowling.budget.Views.EditProfileView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EDIT PROFILE"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+       android:hint="New User Name"
+        android:ems="10"
+        android:id="@+id/newUserName" />
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/camera"
+        android:id="@+id/imageView"
+        android:layout_weight="0.21"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <Button
+        android:text="New Pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/picButton"
+        />
+
+    <Button
+        android:text="Submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/submit_button"
+
+        />
+
+
 
 </com.stveo.stevebowling.budget.Views.EditProfileView>

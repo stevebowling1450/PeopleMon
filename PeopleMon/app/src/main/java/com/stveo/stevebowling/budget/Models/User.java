@@ -8,6 +8,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
+
+
     @SerializedName("UserId")
     String userId;
 
@@ -26,6 +28,17 @@ public class User {
     @SerializedName("Created")
     String created;
 
+    @SerializedName("CaughtUserId")
+    String caughtUserId;
+
+    @SerializedName("RadiusInMeters")
+    Integer radiusInMeters;
+
+    public User(String caughtUserId, Integer radiusInMeters) {
+        this.caughtUserId = caughtUserId;
+        this.radiusInMeters = radiusInMeters;
+    }
+
     public User(String avatarBase, String created, double latitude, double longitude, String userId, String userName) {
         this.avatarBase = avatarBase;
         this.created = created;
@@ -33,6 +46,22 @@ public class User {
         this.longitude = longitude;
         this.userId = userId;
         this.userName = userName;
+    }
+
+    public String getCaughtUserId() {
+        return caughtUserId;
+    }
+
+    public void setCaughtUserId(String caughtUserId) {
+        this.caughtUserId = caughtUserId;
+    }
+
+    public Integer getRadiusInMeters() {
+        return radiusInMeters;
+    }
+
+    public void setRadiusInMeters(Integer radiusInMeters) {
+        this.radiusInMeters = radiusInMeters;
     }
 
     public String getAvatarBase() {

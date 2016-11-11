@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,7 +33,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.stveo.stevebowling.budget.MainActivity;
 import com.stveo.stevebowling.budget.Models.User;
 import com.stveo.stevebowling.budget.Network.RestClient;
+import com.stveo.stevebowling.budget.PeopleMonApplication;
 import com.stveo.stevebowling.budget.R;
+import com.stveo.stevebowling.budget.Stages.CaughtStage;
 
 import java.util.Timer;
 import java.util.logging.Handler;
@@ -40,6 +43,9 @@ import java.util.logging.LogRecord;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import flow.Flow;
+import flow.History;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,8 +57,12 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
     private GoogleMap mMap;
     private Context context;
     public LatLng Home;
-    private double lat = 37.52917112;
-    private double lng = -82.66207811;
+    private double lat;
+    private double lng;
+    public String otherUserId;
+    public String name;
+    public String id;
+    public String otherUserName;
 
     Timer timer = new Timer();
     Handler handler = new Handler() {
@@ -85,13 +95,9 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
 
     @Override
     protected void onFinishInflate() {
-
-
         ButterKnife.bind(this);
         super.onFinishInflate();
         mapView.getMapAsync(this);
-
-
         mapView.onCreate(((MainActivity) getContext()).savedInstanceState);
         mapView.onResume();
 
@@ -107,16 +113,23 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
         mMap.setOnMyLocationChangeListener(myLocationChangeListener);
         UiSettings UiSettings = mMap.getUiSettings();
 
-        //Toast.makeText(context, "Map loaded", Toast.LENGTH_SHORT).show();
+//        final Runnable r = new Runnable() {
+//            public void run() {
+//                mapView.postDelayed(this,3000);
+//                mMap.clear();
+//            }
+//        };
+//        mapView.postDelayed(r,3000);
+
+
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
         }
-        Home = new LatLng(lat, lng);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 18));
+//        Home = new LatLng(lat, lng);
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 18));
         mMap.setMyLocationEnabled(true);
-        setCheckin();
 
 
 
@@ -149,7 +162,14 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        if (marker.getId().contains("")){
+            Toast.makeText(context, "YOU CLICKED", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "YOU CLICKED", Toast.LENGTH_SHORT).show();
+            caughtUser();
+        }
         return false;
+
     }
 
 
@@ -162,10 +182,9 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
     }
 
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
-        @Override
-        public void onMyLocationChange(Location location) {
-            mMap.clear();
-            //  mLastLocation = location;
+            @Override
+            public void onMyLocationChange(Location location) {
+                mMap.clear();
             lat = location.getLatitude();
             lng = location.getLongitude();
             Home = new LatLng(lat, lng);
@@ -177,7 +196,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.superman))
                     .snippet("Home")
                     .draggable(true)
-                    .position(loc));
+                    .position(Home));
 
 
             final Circle circle = mMap.addCircle(new CircleOptions().center(Home)
@@ -194,29 +213,30 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
                 @Override
                 public void onAnimationUpdate(ValueAnimator valueAnimator) {
                     float animatedFraction = valueAnimator.getAnimatedFraction();
-                    // Log.e("", "" + animatedFraction);
+                    //Log.e("", "" + animatedFraction);
                     circle.setRadius(animatedFraction * 100);
                 }
             });
             vAnimator.start();
-            //setCheckin();
+               setCheckin();
+                viewNearby();
 
-            viewNearby();
 
         }
 
     };
 
     public void setCheckin() {
+
         User checkin = new User(lat, lng);
         RestClient restClient = new RestClient();
         restClient.getApiSevrice().checkin(checkin).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(context, "Checked In ", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(context, "Checked In ", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, "CheckIn Failed", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(context, "CheckIn Failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -224,22 +244,30 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
             public void onFailure(Call<Void> call, Throwable t) {
             }
         });
+
+
     }
+
+
     public void viewNearby() {
         RestClient restClient = new RestClient();
-        restClient.getApiSevrice().findNearby(50000).enqueue(new Callback<User[]>() {
+        restClient.getApiSevrice().findNearby(5000).enqueue(new Callback<User[]>() {
             @Override
             public void onResponse(Call<User[]> call, Response<User[]> response) {
                 if (response.isSuccessful()) {
                     for (User user : response.body()) {
                         lat = user.getLatitude();
                         lng = user.getLongitude();
+                        otherUserId =user.getUserId();
+                        otherUserName = user.getUserName();
                         LatLng userpos = new LatLng(lat, lng);
                         mMap.addMarker(new MarkerOptions()
                                 .title(user.getUserName())
+                                .snippet(otherUserId)
                                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.person))
-                                .snippet("Other person")
                                 .position(userpos));
+
+                        //Log.d("@@@@@  ", otherUserName);
                     }
                 } else {
                     Toast.makeText(context, "view Nearby Failed: " + response.code(), Toast.LENGTH_SHORT).show();
@@ -253,6 +281,55 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
 
             }
         });
+
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+              otherUserName = marker.getTitle();
+                id = marker.getSnippet();
+
+                caughtUser();
+                Toast.makeText(context, "You Caught "+ otherUserName, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+
+
+    }
+
+    public void caughtUser(){
+        setCheckin();
+        viewNearby();
+       User caughtUserId = new User(id,999999);
+        RestClient restClient= new RestClient();
+        restClient.getApiSevrice().catchUser(caughtUserId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+//                if (response.isSuccessful()) {
+                    Toast.makeText(context, "Caught" + otherUserId, Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+//                    Toast.makeText(context, "Not Caught", Toast.LENGTH_SHORT).show();
+//                }
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+
+            }
+        });
+    }
+    @OnClick(R.id.caught_button)
+    public void viewCaught() {
+        Flow flow = PeopleMonApplication.getMainFlow();
+        History newHistory = flow.getHistory().buildUpon()
+                .push(new CaughtStage())
+                .build();
+        flow.setHistory(newHistory, Flow.Direction.FORWARD);
     }
 
 }

@@ -84,6 +84,16 @@ public class Account {
 
     }
 
+    public Account( String avatarBase64) {
+            this.avatarBase64 = Constants.avatar;
+            //this.fullName = fullName;
+    }
+
+    public Account(String fullName, String avatarBase64) {
+        this.avatarBase64 = Constants.avatar;
+        this.fullName = fullName;
+    }
+
     public String getId() {
         return id;
     }
