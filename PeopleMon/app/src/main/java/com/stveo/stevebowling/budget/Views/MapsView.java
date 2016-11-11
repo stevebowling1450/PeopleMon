@@ -113,13 +113,6 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
         mMap.setOnMyLocationChangeListener(myLocationChangeListener);
         UiSettings UiSettings = mMap.getUiSettings();
 
-//        final Runnable r = new Runnable() {
-//            public void run() {
-//                mapView.postDelayed(this,3000);
-//                mMap.clear();
-//            }
-//        };
-//        mapView.postDelayed(r,3000);
 
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -127,8 +120,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
         }
-//        Home = new LatLng(lat, lng);
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 18));
+//
         mMap.setMyLocationEnabled(true);
 
 
@@ -251,7 +243,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
 
     public void viewNearby() {
         RestClient restClient = new RestClient();
-        restClient.getApiSevrice().findNearby(5000).enqueue(new Callback<User[]>() {
+        restClient.getApiSevrice().findNearby(100).enqueue(new Callback<User[]>() {
             @Override
             public void onResponse(Call<User[]> call, Response<User[]> response) {
                 if (response.isSuccessful()) {
@@ -300,9 +292,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
     }
 
     public void caughtUser(){
-        setCheckin();
-        viewNearby();
-       User caughtUserId = new User(id,999999);
+       User caughtUserId = new User(id,100);
         RestClient restClient= new RestClient();
         restClient.getApiSevrice().catchUser(caughtUserId).enqueue(new Callback<User>() {
             @Override

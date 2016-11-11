@@ -41,4 +41,7 @@ public interface ApiSevrice {
     @GET("v1/User/Caught")
     Call<User[]>caughtList();
 
+    @GET("api/Account/UserInfo")
+    Call<Account>myInfo();
+
 }

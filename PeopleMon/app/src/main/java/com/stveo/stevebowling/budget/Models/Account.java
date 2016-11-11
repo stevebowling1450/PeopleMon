@@ -13,60 +13,72 @@ import java.util.Date;
 
 public class Account {
 
-    @SerializedName("id")
+    @SerializedName("Id")
     private String id;
 
-    @SerializedName("email")
+    @SerializedName("Email")
     private String email;
 
-    @SerializedName("hasRegistered")
+    @SerializedName("HasRegistered")
     private Boolean hasRegistered;
 
-    @SerializedName("loginProvider")
+    @SerializedName("LoginProvider")
     private String loginProvider;
 
-    @SerializedName("fullName")
+    @SerializedName("FullName")
     private String fullName;
 
-    @SerializedName("avatarBase64")
+    @SerializedName("AvatarBase64")
     private String avatarBase64;
 
-    @SerializedName("lastLong")
-    private Integer lastLong;
+    @SerializedName("LastCheckInLongitude")
+    private Double lastLong;
+    
+    @SerializedName("LastCheckInLatitude")
+    private Double lastLat;
 
-    @SerializedName("lastLat")
-    private Integer lastLat;
+    @SerializedName("LastCheckInDateTime")
+    private String  lastCheckinDate;
 
-    @SerializedName("lastCheckinDate")
-    private Boolean lastCheckinDate;
-
-    @SerializedName("password")
+    @SerializedName("Password")
     private String password;
 
-    @SerializedName("newPassword")
+    @SerializedName("NewPassword")
     private String newPassword;
 
-    @SerializedName("oldPassword")
+    @SerializedName("OldPassword")
     private String oldPassword;
 
-    @SerializedName("confirmPassword")
+    @SerializedName("ConfirmPassword")
     private String confirmPassword;
 
-    @SerializedName("apiKey")
+    @SerializedName("ApiKey")
     private String apiKey;
 
-    @SerializedName("access_token")
+    @SerializedName("Access_token")
     private String token;
 
     @SerializedName(".expires")
     private Date expiration;
 
-    @SerializedName("grantType")
+    @SerializedName("GrantType")
     private String grantType;
 
 
 
     public Account() {
+    }
+
+    public Account(String id, String email, Boolean hasRegistered , String loginProvider, String fullName, String avatarBase64 , Double lastLong, Double lastLat , String lastCheckinDate) {
+        this.avatarBase64 = avatarBase64;
+        this.email = email;
+        this.fullName = fullName;
+        this.hasRegistered = hasRegistered;
+        this.id = id;
+        this.lastCheckinDate = lastCheckinDate;
+        this.lastLat = lastLat;
+        this.lastLong = lastLong;
+        this.loginProvider = loginProvider;
     }
 
     public Account(String email, String fullName,String avatarBase64, String apiKey, String password) {
@@ -142,28 +154,29 @@ public class Account {
         this.avatarBase64 = avatarBase64;
     }
 
-    public Integer getLastLong() {
-        return lastLong;
-    }
 
-    public void setLastLong(Integer lastLong) {
-        this.lastLong = lastLong;
-    }
-
-    public Integer getLastLat() {
-        return lastLat;
-    }
-
-    public void setLastLat(Integer lastLat) {
-        this.lastLat = lastLat;
-    }
-
-    public Boolean getLastCheckinDate() {
+    public String getLastCheckinDate() {
         return lastCheckinDate;
     }
 
-    public void setLastCheckinDate(Boolean lastCheckinDate) {
+    public void setLastCheckinDate(String lastCheckinDate) {
         this.lastCheckinDate = lastCheckinDate;
+    }
+
+    public Double getLastLat() {
+        return lastLat;
+    }
+
+    public void setLastLat(Double lastLat) {
+        this.lastLat = lastLat;
+    }
+
+    public Double getLastLong() {
+        return lastLong;
+    }
+
+    public void setLastLong(Double lastLong) {
+        this.lastLong = lastLong;
     }
 
     public String getPassword() {

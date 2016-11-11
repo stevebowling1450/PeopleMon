@@ -2,14 +2,15 @@ package com.stveo.stevebowling.budget.Views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.gson.annotations.SerializedName;
 import com.stveo.stevebowling.budget.Components.Constants;
+import com.stveo.stevebowling.budget.Components.Utils;
 import com.stveo.stevebowling.budget.MainActivity;
 import com.stveo.stevebowling.budget.Models.Account;
 import com.stveo.stevebowling.budget.Network.RestClient;
@@ -31,6 +32,10 @@ public class EditProfileView extends LinearLayout {
 
     private Context context;
 
+    public String myName;
+
+    public String myAvatar;
+
     @Bind(R.id.imageView)
     ImageView imageView;
 
@@ -42,25 +47,22 @@ public class EditProfileView extends LinearLayout {
     EditText newName;
 
 
-    @SerializedName("avatar")
-    String avatar = Constants.IMAGE;
-
     @Bind(R.id.submit_button)
     Button submit;
 
 
 
+
     public EditProfileView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context=context;
-
-
+        this.context = context;
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        myProfile();
     }
 
     @OnClick(R.id.picButton)
@@ -70,8 +72,8 @@ public class EditProfileView extends LinearLayout {
 
 
     @OnClick(R.id.submit_button)
-    public void editProfile(){
-        Account editUserProfile = new Account(newName.getText().toString(),Constants.IMAGE);
+    public void editProfile() {
+        Account editUserProfile = new Account(newName.getText().toString(), Constants.IMAGE);
         RestClient restClient = new RestClient();
         restClient.getApiSevrice().editProfile(editUserProfile).enqueue(new Callback<Account>() {
             @Override
@@ -87,4 +89,31 @@ public class EditProfileView extends LinearLayout {
         });
     }
 
+
+    public void myProfile() {
+        RestClient restClient = new RestClient();
+        restClient.getApiSevrice().myInfo().enqueue(new Callback<Account>() {
+            @Override
+            public void onResponse(Call<Account> call, Response<Account> response) {
+                if (response.isSuccessful()){
+                     Account profile = response.body();
+                    newName.setText(profile.getFullName());
+                    imageView.setImageBitmap(Utils.decodeImage(profile.getAvatarBase64()));
+                        myName = profile.getFullName();
+                        myAvatar= profile.getAvatarBase64();
+                       // Log.d("%%%%%%", myName + myAvatar);
+                    //Toast.makeText(context, "Your Name "+ myName, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            @Override
+            public void onFailure(Call<Account> call, Throwable t) {
+                Toast.makeText(context, "failed", Toast.LENGTH_SHORT).show();
+                Log.d("%%%%%%", myName + myAvatar);
+            }
+
+        });
+
+
+    }
 }
