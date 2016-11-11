@@ -33,7 +33,7 @@ public class Account {
 
     @SerializedName("LastCheckInLongitude")
     private Double lastLong;
-    
+
     @SerializedName("LastCheckInLatitude")
     private Double lastLat;
 

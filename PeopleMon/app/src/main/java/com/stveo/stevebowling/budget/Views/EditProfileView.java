@@ -53,6 +53,8 @@ public class EditProfileView extends LinearLayout {
 
 
 
+
+
     public EditProfileView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -99,6 +101,7 @@ public class EditProfileView extends LinearLayout {
                      Account profile = response.body();
                     newName.setText(profile.getFullName());
                     imageView.setImageBitmap(Utils.decodeImage(profile.getAvatarBase64()));
+                    Constants.me = (Utils.decodeImage(profile.getAvatarBase64()));
                         myName = profile.getFullName();
                         myAvatar= profile.getAvatarBase64();
                        // Log.d("%%%%%%", myName + myAvatar);

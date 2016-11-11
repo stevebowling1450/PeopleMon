@@ -5,6 +5,7 @@ import android.animation.IntEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.stveo.stevebowling.budget.Components.Constants;
+import com.stveo.stevebowling.budget.Components.Utils;
 import com.stveo.stevebowling.budget.MainActivity;
 import com.stveo.stevebowling.budget.Models.User;
 import com.stveo.stevebowling.budget.Network.RestClient;
@@ -63,6 +66,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
     public String name;
     public String id;
     public String otherUserName;
+    public Bitmap userAvatar;
 
     Timer timer = new Timer();
     Handler handler = new Handler() {
@@ -176,19 +180,29 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-                mMap.clear();
+
             lat = location.getLatitude();
             lng = location.getLongitude();
             Home = new LatLng(lat, lng);
             String pos = Home + "";
             Log.d("****", pos);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 18));
-            LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-            mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.superman))
-                    .snippet("Home")
-                    .draggable(true)
-                    .position(Home));
+                if (Constants.me !=null) {
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromBitmap(Constants.me))
+                            .snippet("Home")
+                            .draggable(true)
+                            .position(Home));
+                }else {
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.superman))
+                            .snippet("Home")
+                            .draggable(true)
+                            .position(Home));
+
+                }
+
+
 
 
             final Circle circle = mMap.addCircle(new CircleOptions().center(Home)
@@ -247,19 +261,27 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
             @Override
             public void onResponse(Call<User[]> call, Response<User[]> response) {
                 if (response.isSuccessful()) {
+                    mMap.clear();
                     for (User user : response.body()) {
                         lat = user.getLatitude();
                         lng = user.getLongitude();
+                        userAvatar=(Utils.decodeImage(user.getAvatarBase()));
                         otherUserId =user.getUserId();
                         otherUserName = user.getUserName();
-                        LatLng userpos = new LatLng(lat, lng);
-                        mMap.addMarker(new MarkerOptions()
-                                .title(user.getUserName())
-                                .snippet(otherUserId)
-                                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.person))
-                                .position(userpos));
+                        LatLng userLocale = new LatLng(lat, lng);
 
-                        //Log.d("@@@@@  ", otherUserName);
+                        if (userAvatar !=null) {
+                            mMap.addMarker(new MarkerOptions()
+                                    .title(user.getUserName())
+                                    .snippet(otherUserId)
+                                    .icon(BitmapDescriptorFactory.fromBitmap(userAvatar))
+                                    .position(userLocale));
+                        }else {
+                            mMap.addMarker(new MarkerOptions()
+                                    .title(user.getUserName())
+                                    .snippet(otherUserId)
+                                    .position(userLocale));
+                        }
                     }
                 } else {
                     Toast.makeText(context, "view Nearby Failed: " + response.code(), Toast.LENGTH_SHORT).show();
@@ -282,7 +304,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
                 id = marker.getSnippet();
 
                 caughtUser();
-                Toast.makeText(context, "You Caught "+ otherUserName, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"You Caught "+ otherUserName, Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
