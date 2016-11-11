@@ -81,6 +81,7 @@ public class EditProfileView extends LinearLayout {
             @Override
             public void onResponse(Call<Account> call, Response<Account> response) {
                 Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+                myProfile();
 
             }
 

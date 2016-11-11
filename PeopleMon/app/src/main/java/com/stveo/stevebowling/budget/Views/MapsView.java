@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -165,12 +164,15 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-                mMap.clear();
+
             lat = location.getLatitude();
             lng = location.getLongitude();
             Home = new LatLng(lat, lng);
             String pos = Home + "";
             Log.d("****", pos);
+
+                setCheckin();
+                viewNearby();
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 18));
                 if (Constants.me !=null) {
                     mMap.addMarker(new MarkerOptions()
@@ -203,8 +205,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
                     }
                 });
                 vAnimator.start();
-                setCheckin();
-                viewNearby();
+
         }
 
     };
@@ -234,6 +235,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
             @Override
             public void onResponse(Call<User[]> call, Response<User[]> response) {
                 if (response.isSuccessful()) {
+                    mMap.clear();
                     for (User user : response.body()) {
                         lat = user.getLatitude();
                         lng = user.getLongitude();
@@ -301,6 +303,7 @@ public class MapsView extends RelativeLayout implements OnMapReadyCallback,
                 .build();
         flow.setHistory(newHistory, Flow.Direction.FORWARD);
     }
+
 }
 
 
